@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Talento Humano · FRIGOR</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: #f4f6f8;
+    color: #0f2436;
+  }
+  header {
+    background: #0f2436;
+    color: #fff;
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header h1 { font-size: 17px; margin: 0; font-weight: 600; }
+  header button {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.4);
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  header button:hover { background: rgba(255,255,255,.12); }
+  main {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 56px 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  a.card {
+    display: block;
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 26px;
+    text-decoration: none;
+    color: #0f2436;
+    box-shadow: 0 6px 18px rgba(15,36,54,.08);
+    border: 1px solid #e4e9ec;
+    transition: transform .15s, box-shadow .15s;
+  }
+  a.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(15,36,54,.14);
+  }
+  a.card .icon { font-size: 30px; margin-bottom: 10px; display: block; }
+  a.card h2 { margin: 0 0 8px; font-size: 18px; }
+  a.card p { margin: 0; font-size: 14px; color: #5b6b76; line-height: 1.5; }
+</style>
+</head>
+<body>
+  <header>
+    <h1>Talento Humano · FRIGOR</h1>
+    <button id="logoutBtn">Cerrar sesión</button>
+  </header>
+  <main>
+    <a class="card" href="/organigramas/">
+      <span class="icon">🗂️</span>
+      <h2>Organigramas</h2>
+      <p>Estructura jerárquica por cargo, vista vertical y lineal, y personigrama por área y nivel.</p>
+    </a>
+    <a class="card" href="/perfiles/">
+      <span class="icon">📋</span>
+      <h2>Perfiles de Cargo</h2>
+      <p>Diseño de perfiles, manual de competencias y evaluación curricular de candidatos.</p>
+    </a>
+  </main>
+  <script>
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      await fetch("/api/logout", { method: "POST" });
+      window.location.href = "/login.html";
+    });
+  </script>
+</body>
+</html>

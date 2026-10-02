@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Talento Humano FRIGOR</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: #0f2436;
+    background: linear-gradient(135deg, #0f2436, #1a3a52);
+  }
+  .card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 36px 32px;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  }
+  h1 {
+    font-size: 18px;
+    margin: 0 0 4px;
+    color: #0f2436;
+  }
+  p.sub {
+    margin: 0 0 24px;
+    color: #5b6b76;
+    font-size: 14px;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    color: #344;
+    margin-bottom: 6px;
+  }
+  input[type="password"] {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #ccd5db;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+  input[type="password"]:focus {
+    outline: 2px solid #2f7ea8;
+    border-color: #2f7ea8;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #1a5276;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { background: #154360; }
+  button:disabled { opacity: .6; cursor: default; }
+  .error {
+    color: #b3261e;
+    font-size: 13px;
+    margin: 0 0 14px;
+    min-height: 16px;
+  }
+</style>
+</head>
+<body>
+  <form class="card" id="loginForm">
+    <h1>Talento Humano · FRIGOR</h1>
+    <p class="sub">Organigramas y Perfiles de Cargo</p>
+    <label for="password">Clave de acceso</label>
+    <input type="password" id="password" name="password" autocomplete="current-password" required autofocus />
+    <p class="error" id="error"></p>
+    <button type="submit" id="submitBtn">Entrar</button>
+  </form>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const errorEl = document.getElementById("error");
+    const btn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      errorEl.textContent = "";
+      btn.disabled = true;
+      btn.textContent = "Entrando…";
+      try {
+        const res = await fetch("/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password: document.getElementById("password").value }),
+        });
+        if (res.ok) {
+          window.location.href = "/";
+        } else {
+          errorEl.textContent = "Clave incorrecta. Probá de nuevo.";
+        }
+      } catch (err) {
+        errorEl.textContent = "No se pudo conectar. Probá de nuevo.";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Entrar";
+      }
+    });
+  </script>
+</body>
+</html>
